@@ -1,8 +1,11 @@
-package com.mehmetkaanaydenk.mwallpaper
+package com.mehmetkaanaydenk.mwallpaper.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.mehmetkaanaydenk.mwallpaper.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
