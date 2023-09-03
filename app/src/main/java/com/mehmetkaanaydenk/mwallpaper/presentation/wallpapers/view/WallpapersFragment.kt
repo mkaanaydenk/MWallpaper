@@ -30,7 +30,7 @@ class WallpapersFragment() : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        viewModel = ViewModelProvider(requireActivity())[WallpapersViewModel::class.java]
 
     }
 
@@ -45,7 +45,7 @@ class WallpapersFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity())[WallpapersViewModel::class.java]
+        viewModel.onEvent(WallpapersEvent.Search("home"))
 
         val state = viewModel.state
 
