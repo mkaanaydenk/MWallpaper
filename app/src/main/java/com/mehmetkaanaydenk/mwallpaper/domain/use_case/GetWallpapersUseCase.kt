@@ -1,5 +1,6 @@
 package com.mehmetkaanaydenk.mwallpaper.domain.use_case
 
+import androidx.lifecycle.LiveData
 import com.mehmetkaanaydenk.mwallpaper.data.remote.dto.toWallpaperList
 import com.mehmetkaanaydenk.mwallpaper.domain.model.Wallpaper
 import com.mehmetkaanaydenk.mwallpaper.domain.repository.WallpaperRepository
@@ -12,20 +13,23 @@ import javax.inject.Inject
 class GetWallpapersUseCase @Inject constructor(private val repository: WallpaperRepository) {
 
 
-    fun executeGetWallpapers(query: String?): Flow<Resource<List<Wallpaper>>> = flow{
+    fun executeGetWallpapers(query: String?): Flow<Resource<List<Wallpaper>>> = flow {
 
         try {
-
             emit(Resource.Loading())
-            val wallpapers = repository.getWallpapers(query)
-            if (wallpapers.wallpapersDetailDto.isNotEmpty()){
-                emit(Resource.Success(wallpapers.toWallpaperList()))
+            val wallpaper = repository.getWallpapers(query)
+            if (wallpaper.wallpapersDetailDto.isNotEmpty()){
+
+                emit(Resource.Success(wallpaper.toWallpaperList()))
+
             }else{
                 emit(Resource.Error("No wallpaper found"))
             }
 
         }catch (e: IOError){
-            emit(Resource.Error("connection error"))
+
+            emit(Resource.Error("Network error"))
+
         }
 
     }

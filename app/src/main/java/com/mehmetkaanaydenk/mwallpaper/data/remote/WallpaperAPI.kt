@@ -9,7 +9,7 @@ import retrofit2.http.Query
 
 interface WallpaperAPI {
 
-    @GET("/api")
+    @GET("/api/")
     suspend fun getWallpapers(
 
         @Query("q") query: String?,

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/wallpapersFragment">
+
+    <fragment
+        android:id="@+id/wallpapersFragment"
+        android:name="com.mehmetkaanaydenk.mwallpaper.presentation.wallpapers.view.WallpapersFragment"
+        android:label="fragment_wallpapers"
+        tools:layout="@layout/fragment_wallpapers" >
+        <action
+            android:id="@+id/action_wallpapersFragment_to_wallpaperDetailFragment"
+            app:destination="@id/wallpaperDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/wallpaperDetailFragment"
+        android:name="com.mehmetkaanaydenk.mwallpaper.presentation.wallpaper_detail.view.WallpaperDetailFragment"
+        android:label="fragment_wallpaper_detail"
+        tools:layout="@layout/fragment_wallpaper_detail" />
+</navigation>
