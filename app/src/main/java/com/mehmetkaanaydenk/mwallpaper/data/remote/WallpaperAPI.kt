@@ -17,9 +17,20 @@ interface WallpaperAPI {
         @Query("key") apiKey: String = API_KEY,
         @Query("order") order: String = "trending",
         @Query("lang") lang: String = Locale.getDefault().language,
+        @Query("category") category: String = "backgrounds",
         @Query("image_type") imageType: String = IMAGE_TYPE,
         @Query("orientation") orientation: String = ORIENTATION,
         @Query("per_page") perPage: Int = 180
+
+    ): WallpapersDto
+
+    @GET("/api/")
+    suspend fun getWallpaperDetail(
+
+        @Query("id") id: String,
+        @Query("key") apiKey: String = API_KEY,
+        @Query("image_type") imageType: String = IMAGE_TYPE,
+        @Query("orientation") orientation: String = ORIENTATION,
 
     ): WallpapersDto
 

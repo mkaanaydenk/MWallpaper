@@ -6,4 +6,6 @@ interface WallpaperRepository {
 
     suspend fun getWallpapers(query: String?): WallpapersDto
 
+    suspend fun getWallpaperDetail(id: String): WallpapersDto
+
 }

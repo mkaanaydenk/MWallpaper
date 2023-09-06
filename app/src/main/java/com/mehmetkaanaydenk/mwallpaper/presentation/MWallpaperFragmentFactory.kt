@@ -1,8 +1,9 @@
-package com.mehmetkaanaydenk.mwallpaper.presentation.wallpapers.view
+package com.mehmetkaanaydenk.mwallpaper.presentation
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import com.mehmetkaanaydenk.mwallpaper.presentation.wallpapers.adapter.WallpapersRecyclerAdapter
+import com.mehmetkaanaydenk.mwallpaper.presentation.wallpapers.view.WallpapersFragment
 import javax.inject.Inject
 
 class MWallpaperFragmentFactory @Inject constructor(

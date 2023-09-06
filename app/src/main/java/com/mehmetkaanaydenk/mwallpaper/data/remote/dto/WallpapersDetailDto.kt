@@ -29,6 +29,6 @@ data class WallpapersDetailDto(
 
 fun WallpapersDetailDto.toWallpaperDetail(): WallpaperDetail{
 
-    return WallpaperDetail(downloads, id, imageHeight, imageWidth, largeImageURL, likes, previewHeight, previewURL, previewWidth, user, views)
+    return WallpaperDetail(downloads, id, imageHeight, imageWidth, largeImageURL, likes, user, views)
 
 }

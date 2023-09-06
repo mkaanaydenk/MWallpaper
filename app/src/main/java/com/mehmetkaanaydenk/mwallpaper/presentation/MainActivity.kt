@@ -3,7 +3,6 @@ package com.mehmetkaanaydenk.mwallpaper.presentation
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.mehmetkaanaydenk.mwallpaper.R
-import com.mehmetkaanaydenk.mwallpaper.presentation.wallpapers.view.MWallpaperFragmentFactory
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

@@ -1,12 +1,14 @@
 package com.mehmetkaanaydenk.mwallpaper.presentation.wallpapers.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.mehmetkaanaydenk.mwallpaper.databinding.WallpapersRecyclerRowBinding
 import com.mehmetkaanaydenk.mwallpaper.domain.model.Wallpaper
+import com.mehmetkaanaydenk.mwallpaper.presentation.wallpapers.view.WallpapersFragmentDirections
 import javax.inject.Inject
 
 class WallpapersRecyclerAdapter @Inject constructor(val glide : RequestManager): RecyclerView.Adapter<WallpapersRecyclerAdapter.WallpapersHolder>() {
@@ -44,6 +46,16 @@ class WallpapersRecyclerAdapter @Inject constructor(val glide : RequestManager):
     override fun onBindViewHolder(holder: WallpapersHolder, position: Int) {
         glide.load(wallpaperList[position].previewURL)
             .into(holder.binding.wallpaperImageView)
+
+        holder.itemView.setOnClickListener {
+
+            val action = WallpapersFragmentDirections.actionWallpapersFragmentToWallpaperDetailFragment(wallpaperList[position].id.toString())
+            it.findNavController().navigate(action)
+
+        }
+
+
+
     }
 
 

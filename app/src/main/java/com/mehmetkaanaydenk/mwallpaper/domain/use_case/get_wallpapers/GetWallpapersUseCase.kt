@@ -1,6 +1,5 @@
-package com.mehmetkaanaydenk.mwallpaper.domain.use_case
+package com.mehmetkaanaydenk.mwallpaper.domain.use_case.get_wallpapers
 
-import androidx.lifecycle.LiveData
 import com.mehmetkaanaydenk.mwallpaper.data.remote.dto.toWallpaperList
 import com.mehmetkaanaydenk.mwallpaper.domain.model.Wallpaper
 import com.mehmetkaanaydenk.mwallpaper.domain.repository.WallpaperRepository

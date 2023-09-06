@@ -10,9 +10,6 @@ class WallpaperDetail(
     val imageWidth: Int,
     val largeImageURL: String,
     val likes: Int,
-    val previewHeight: Int,
-    val previewURL: String,
-    val previewWidth: Int,
     val user: String,
     val views: Int
 

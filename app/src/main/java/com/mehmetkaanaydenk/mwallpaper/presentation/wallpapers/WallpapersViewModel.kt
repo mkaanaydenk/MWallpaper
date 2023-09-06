@@ -2,12 +2,10 @@ package com.mehmetkaanaydenk.mwallpaper.presentation.wallpapers
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mehmetkaanaydenk.mwallpaper.domain.use_case.GetWallpapersUseCase
+import com.mehmetkaanaydenk.mwallpaper.domain.use_case.get_wallpapers.GetWallpapersUseCase
 import com.mehmetkaanaydenk.mwallpaper.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
