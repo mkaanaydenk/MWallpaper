@@ -6,29 +6,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.mehmetkaanaydenk.mwallpaper.R
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.mehmetkaanaydenk.mwallpaper.databinding.FragmentWallpapersBinding
 import com.mehmetkaanaydenk.mwallpaper.presentation.wallpapers.WallpapersEvent
 import com.mehmetkaanaydenk.mwallpaper.presentation.wallpapers.WallpapersViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.mehmetkaanaydenk.mwallpaper.presentation.wallpapers.adapter.WallpapersRecyclerAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.FlowCollector
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import java.util.Locale
+import javax.inject.Inject
 
-class WallpapersFragment() : Fragment() {
+class WallpapersFragment @Inject constructor(val adapter: WallpapersRecyclerAdapter)  : Fragment() {
 
 
-    private lateinit var dataBinding: FragmentWallpapersBinding
+    private lateinit var binding: FragmentWallpapersBinding
     private lateinit var viewModel: WallpapersViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,24 +38,28 @@ class WallpapersFragment() : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        dataBinding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_wallpapers, container, false)
-        return dataBinding.root
+        binding = FragmentWallpapersBinding.inflate(LayoutInflater.from(context))
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val layoutManager: RecyclerView.LayoutManager = GridLayoutManager(requireContext(),4)
+        binding.wallpapersRecyclerView.adapter = adapter
+        binding.wallpapersRecyclerView.layoutManager = layoutManager
+
 
 
         val state = viewModel.state
 
         val scope = CoroutineScope(Dispatchers.IO)
 
-        dataBinding.searchEditText.addTextChangedListener {
+        binding.searchEditText.addTextChangedListener {
 
             scope.launch {
 
-                delay(2000)
+                delay(1000)
                 viewModel.onEvent(WallpapersEvent.Search(it.toString()))
             }
         }
@@ -72,7 +72,7 @@ class WallpapersFragment() : Fragment() {
                 val wallpapers = it.wallpapers
 
                 if (wallpapers.isNotEmpty()) {
-                    println(wallpapers.size)
+                    adapter.wallpaperList = wallpapers
 
                 }
 

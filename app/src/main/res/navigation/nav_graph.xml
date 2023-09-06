@@ -18,5 +18,10 @@
         android:id="@+id/wallpaperDetailFragment"
         android:name="com.mehmetkaanaydenk.mwallpaper.presentation.wallpaper_detail.view.WallpaperDetailFragment"
         android:label="fragment_wallpaper_detail"
-        tools:layout="@layout/fragment_wallpaper_detail" />
+        tools:layout="@layout/fragment_wallpaper_detail" >
+        <argument
+            android:name="wId"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>
