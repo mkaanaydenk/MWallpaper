@@ -18,13 +18,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.util.Locale
 import javax.inject.Inject
 
 class WallpapersFragment @Inject constructor(val adapter: WallpapersRecyclerAdapter)  : Fragment() {
 
 
-    private lateinit var binding: FragmentWallpapersBinding
+    private var _binding: FragmentWallpapersBinding? = null
+    private val binding get() = _binding!!
     private lateinit var viewModel: WallpapersViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +38,7 @@ class WallpapersFragment @Inject constructor(val adapter: WallpapersRecyclerAdap
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentWallpapersBinding.inflate(LayoutInflater.from(context))
+        _binding = FragmentWallpapersBinding.inflate(LayoutInflater.from(context))
         return binding.root
     }
 
@@ -81,6 +81,11 @@ class WallpapersFragment @Inject constructor(val adapter: WallpapersRecyclerAdap
         }
 
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 

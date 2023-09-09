@@ -5,6 +5,7 @@ import com.mehmetkaanaydenk.mwallpaper.domain.model.WallpaperDetail
 data class WallpaperDetailState(
 
     val isLoading: Boolean = false,
-    val wallpaperDetail: WallpaperDetail,
+    val wallpaperDetail: WallpaperDetail? = null,
+    val wallpaperId: String = "",
     val error: String = ""
 )

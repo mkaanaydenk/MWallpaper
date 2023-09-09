@@ -58,7 +58,6 @@ object AppModule {
     fun injectGlide(@ApplicationContext context: Context)= Glide.with(context)
         .setDefaultRequestOptions(
             RequestOptions().placeholder(placeHolderProgressBar(context))
-                .error(R.mipmap.ic_launcher_round)
                 .transform(CenterCrop(), RoundedCorners(12))
         )
 
