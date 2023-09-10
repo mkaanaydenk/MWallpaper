@@ -1,5 +1,6 @@
 package com.mehmetkaanaydenk.mwallpaper.data.di
 
+import android.app.WallpaperManager
 import android.content.Context
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
@@ -62,6 +63,9 @@ object AppModule {
         )
 
 
+    @Provides
+    @Singleton
+    fun injectWallpaperManager(@ApplicationContext context: Context)= WallpaperManager.getInstance(context)
 
 }
 

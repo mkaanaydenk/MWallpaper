@@ -14,6 +14,7 @@ import com.mehmetkaanaydenk.mwallpaper.databinding.FragmentWallpapersBinding
 import com.mehmetkaanaydenk.mwallpaper.presentation.wallpapers.WallpapersEvent
 import com.mehmetkaanaydenk.mwallpaper.presentation.wallpapers.WallpapersViewModel
 import com.mehmetkaanaydenk.mwallpaper.presentation.wallpapers.adapter.WallpapersRecyclerAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -26,6 +27,7 @@ class WallpapersFragment @Inject constructor(val adapter: WallpapersRecyclerAdap
     private var _binding: FragmentWallpapersBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: WallpapersViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
