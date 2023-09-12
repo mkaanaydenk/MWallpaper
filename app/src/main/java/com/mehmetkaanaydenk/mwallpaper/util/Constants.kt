@@ -6,6 +6,8 @@ object Constants {
     const val BASE_URL = "https://pixabay.com"
     const val IMAGE_TYPE = "photo"
     const val ORIENTATION = "vertical"
+    const val ORDER = "trending"
+    const val CATEGORY = "backgrounds"
 
 
 }
