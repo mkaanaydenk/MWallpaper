@@ -55,6 +55,8 @@ class WallpapersFragment @Inject constructor(val adapter: WallpapersRecyclerAdap
 
         val state = viewModel.state
 
+
+
         val scope = CoroutineScope(Dispatchers.IO)
 
         binding.searchEditText.addTextChangedListener {
