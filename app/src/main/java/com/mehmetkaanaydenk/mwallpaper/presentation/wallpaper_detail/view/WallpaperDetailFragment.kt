@@ -28,6 +28,7 @@ import com.mehmetkaanaydenk.mwallpaper.R
 import com.mehmetkaanaydenk.mwallpaper.databinding.FragmentWallpaperDetailBinding
 import com.mehmetkaanaydenk.mwallpaper.presentation.wallpaper_detail.WallpaperDetailEvent
 import com.mehmetkaanaydenk.mwallpaper.presentation.wallpaper_detail.WallpaperDetailViewModel
+import com.mehmetkaanaydenk.mwallpaper.util.scaleAndSetWallpaper
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -47,7 +48,6 @@ class WallpaperDetailFragment @Inject constructor(
     lateinit var imageUrl: String
 
     lateinit var imageBitmap: Bitmap
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -147,34 +147,17 @@ class WallpaperDetailFragment @Inject constructor(
             getMetrics(imageBitmap)
         }
 
+        dialogInflater.findViewById<View>(R.id.save_gallery).setOnClickListener {
+
+
+        }
+
     }
 
     private fun getMetrics(cBitmap: Bitmap) {
 
-        val metrics = DisplayMetrics()
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            val metrics = requireActivity().windowManager.currentWindowMetrics
-            val bitmap = Bitmap.createScaledBitmap(
-                cBitmap,
-                metrics.bounds.width(),
-                metrics.bounds.height(),
-                false
-            )
-            wallpaperManager.suggestDesiredDimensions(
-                metrics.bounds.width(),
-                metrics.bounds.height()
-            )
-            wallpaperManager.setWallpaperOffsetSteps(1F, 1F)
-            wallpaperManager.setBitmap(bitmap)
-        } else {
-            requireActivity().windowManager.defaultDisplay.getRealMetrics(metrics)
-            val phoneHeight = metrics.heightPixels
-            val phoneWidth = metrics.widthPixels
-            val bitmap = Bitmap.createScaledBitmap(cBitmap, phoneWidth, phoneHeight, false)
-            wallpaperManager.setWallpaperOffsetSteps(1F, 1F)
-            wallpaperManager.suggestDesiredDimensions(phoneWidth, phoneHeight)
-            wallpaperManager.setBitmap(bitmap)
-        }
+        cBitmap.scaleAndSetWallpaper(requireActivity(), wallpaperManager)
+
 
     }
 
