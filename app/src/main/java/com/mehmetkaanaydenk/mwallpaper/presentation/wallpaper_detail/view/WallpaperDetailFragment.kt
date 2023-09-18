@@ -1,25 +1,26 @@
 package com.mehmetkaanaydenk.mwallpaper.presentation.wallpaper_detail.view
 
 import android.app.WallpaperManager
+import android.content.ContentValues
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Canvas
-import android.graphics.Matrix
-import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
-import android.util.DisplayMetrics
+import android.os.Environment
+import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.RequestManager
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -31,6 +32,8 @@ import com.mehmetkaanaydenk.mwallpaper.presentation.wallpaper_detail.WallpaperDe
 import com.mehmetkaanaydenk.mwallpaper.util.scaleAndSetWallpaper
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.launch
+import java.io.File
+import java.util.UUID
 import javax.inject.Inject
 
 
@@ -49,9 +52,12 @@ class WallpaperDetailFragment @Inject constructor(
 
     lateinit var imageBitmap: Bitmap
 
+    private lateinit var permissionLauncher: ActivityResultLauncher<String>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(requireActivity())[WallpaperDetailViewModel::class.java]
+        registerPermission()
     }
 
     override fun onCreateView(
@@ -76,6 +82,7 @@ class WallpaperDetailFragment @Inject constructor(
         }
 
         getData()
+
 
         bottomSheetDialog = BottomSheetDialog(requireContext())
 
@@ -149,8 +156,153 @@ class WallpaperDetailFragment @Inject constructor(
 
         dialogInflater.findViewById<View>(R.id.save_gallery).setOnClickListener {
 
+            bottomSheetDialog.dismiss()
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                saveImageToMediaStore(imageBitmap)
+            } else {
+                activity?.window?.let { it1 -> saveImageToFile(it1.decorView, imageBitmap) }
+            }
+
 
         }
+
+    }
+
+    private fun registerPermission() {
+
+        permissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestPermission()) { result ->
+
+                if (result) {
+
+
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Galeriye kaydetmek için izin gerekli!",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
+            }
+
+    }
+
+    private fun saveImageToFile(view: View, bitmap: Bitmap) {
+
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    requireActivity(),
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+            ) {
+
+                Snackbar.make(
+                    view,
+                    "Galeriye kayıt için izin gereklidir",
+                    Snackbar.LENGTH_INDEFINITE
+                ).setAction("İzin ver") {
+
+                    //permission request
+                    permissionLauncher.launch(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+                }.show()
+
+            } else {
+                //permission request
+                permissionLauncher.launch(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+            }
+
+        } else {
+            //write file
+            Snackbar.make(
+                requireActivity().findViewById(R.id.constraint_layoutt),
+                "Galeriye kaydedildi!",
+                Snackbar.LENGTH_SHORT
+            ).show()
+
+            val directory =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+
+            val uuid = UUID.randomUUID()
+            val displayName = uuid.toString()
+
+            val imageFile = File(directory, "$displayName.png")
+
+            if (!directory.isDirectory) {
+                directory.mkdir()
+            }
+
+            if (directory.isDirectory) {
+
+                imageFile.outputStream().use {
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
+                }
+                imageFile.toURI()
+
+            }
+
+        }
+
+    }
+
+    private fun saveImageToMediaStore(bitmap: Bitmap) {
+
+        Snackbar.make(
+            requireActivity().findViewById(R.id.constraint_layoutt),
+            "Galeriye kaydedildi!",
+            Snackbar.LENGTH_SHORT
+        ).show()
+
+        val imageCollections = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+
+            MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+
+        } else {
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        }
+
+        val uuid = UUID.randomUUID()
+
+        val displayName = uuid.toString()
+
+        val imageDetails = ContentValues().apply {
+
+            put(MediaStore.Images.Media.DISPLAY_NAME, displayName)
+            put(MediaStore.Images.Media.MIME_TYPE, "image/png")
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                put(MediaStore.Images.Media.IS_PENDING, 1)
+            }
+
+        }
+
+        val resolver = context?.applicationContext?.contentResolver
+        val imageContentUri = resolver?.insert(imageCollections, imageDetails)
+
+        if (imageContentUri != null) {
+            resolver.openOutputStream(imageContentUri, "w").use { os ->
+
+                if (os != null) {
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, os)
+                }
+
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                imageDetails.clear()
+                imageDetails.put(MediaStore.Images.Media.IS_PENDING, 0)
+                resolver.update(imageContentUri, imageDetails, null, null)
+            }
+
+        }
+
 
     }
 
