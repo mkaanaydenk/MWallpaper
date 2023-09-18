@@ -1,5 +1,11 @@
 <resources>
-    <string name="app_name">MWallpaper</string>
+    <string name="app_name" translatable="false">MWallpaper</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="set_wallpaper">SET WALLPAPER</string>
+    <string name="save_gallery">SAVE TO GALLERY</string>
+    <string name="wallpaper_set_success">Wallpaper set successfully!</string>
+    <string name="wallpaper_save_success">Saved to gallery!</string>
+    <string name="permission_required">Permission required for save to gallery!</string>
+    <string name="allow_permission">Allow for save to gallery</string>
+    <string name="permission_let_me">Let me</string>
 </resources>

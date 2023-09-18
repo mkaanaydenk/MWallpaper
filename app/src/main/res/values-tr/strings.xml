@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="set_wallpaper">DUVAR KAĞIDI OLARAK AYARLA</string>
+    <string name="save_gallery">GALERİYE KAYDET</string>
+    <string name="wallpaper_set_success">Duvar kağıdı ayarlandı!</string>
+    <string name="wallpaper_save_success">Galeriye kaydedildi!</string>
+    <string name="permission_required">Galeriye kaydetmek için izin gerekli!</string>
+    <string name="allow_permission">Galeriye kaydetmek için izin verin</string>
+    <string name="permission_let_me">Let me</string>
+</resources>

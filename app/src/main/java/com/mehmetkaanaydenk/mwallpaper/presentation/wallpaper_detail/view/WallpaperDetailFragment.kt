@@ -147,7 +147,7 @@ class WallpaperDetailFragment @Inject constructor(
             activity?.window?.decorView?.let { it1 ->
                 Snackbar.make(
                     it1.findViewById(R.id.constraint_layoutt),
-                    "Duvar kağıdı ayarlandı!",
+                    resources.getString(R.string.wallpaper_set_success),
                     Snackbar.LENGTH_SHORT
                 ).show()
             }
@@ -161,7 +161,7 @@ class WallpaperDetailFragment @Inject constructor(
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 saveImageToMediaStore(imageBitmap)
             } else {
-                activity?.window?.let { it1 -> saveImageToFile(it1.decorView, imageBitmap) }
+                saveImageToFile(imageBitmap)
             }
 
 
@@ -180,7 +180,7 @@ class WallpaperDetailFragment @Inject constructor(
                 } else {
                     Toast.makeText(
                         requireContext(),
-                        "Galeriye kaydetmek için izin gerekli!",
+                        resources.getString(R.string.permission_required),
                         Toast.LENGTH_LONG
                     ).show()
                 }
@@ -189,7 +189,7 @@ class WallpaperDetailFragment @Inject constructor(
 
     }
 
-    private fun saveImageToFile(view: View, bitmap: Bitmap) {
+    private fun saveImageToFile(bitmap: Bitmap) {
 
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
@@ -204,10 +204,10 @@ class WallpaperDetailFragment @Inject constructor(
             ) {
 
                 Snackbar.make(
-                    view,
-                    "Galeriye kayıt için izin gereklidir",
+                    requireActivity().findViewById(R.id.constraint_layoutt),
+                    resources.getString(R.string.allow_permission),
                     Snackbar.LENGTH_INDEFINITE
-                ).setAction("İzin ver") {
+                ).setAction(resources.getString(R.string.permission_let_me)) {
 
                     //permission request
                     permissionLauncher.launch(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -224,7 +224,7 @@ class WallpaperDetailFragment @Inject constructor(
             //write file
             Snackbar.make(
                 requireActivity().findViewById(R.id.constraint_layoutt),
-                "Galeriye kaydedildi!",
+                resources.getString(R.string.wallpaper_save_success),
                 Snackbar.LENGTH_SHORT
             ).show()
 
@@ -257,7 +257,7 @@ class WallpaperDetailFragment @Inject constructor(
 
         Snackbar.make(
             requireActivity().findViewById(R.id.constraint_layoutt),
-            "Galeriye kaydedildi!",
+            resources.getString(R.string.wallpaper_save_success),
             Snackbar.LENGTH_SHORT
         ).show()
 

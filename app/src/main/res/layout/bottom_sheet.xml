@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:drawableStart="@drawable/baseline_photo_24"
-        android:text="SET WALLPAPER"
+        android:text="@string/set_wallpaper"
         android:padding="15dp"
         android:drawablePadding="15dp">
 
@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:drawableStart="@drawable/baseline_save_24"
-        android:text="SAVE TO GALLERY"
+        android:text="@string/save_gallery"
         android:padding="15dp"
         android:drawablePadding="15dp">
 
