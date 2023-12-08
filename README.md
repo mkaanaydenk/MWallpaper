@@ -16,7 +16,7 @@
 
 ## Built With
 
-Clean Architecture - MVVM, Flow, Coroutines, Retrofit, Glide, Navigation, Extensions, Material Design
+Clean Architecture - MVVM, Flow, Coroutines, Hilt, Retrofit, Glide, Navigation, Extensions, Material Design
 
 
 ![Screenshot_20231208_131652](https://github.com/mkaanaydenk/MWallpaper/assets/54694153/92dc0f5a-8595-4205-8161-f260db96d4e5)
